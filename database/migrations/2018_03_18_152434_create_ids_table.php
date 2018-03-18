@@ -16,7 +16,7 @@ class CreateIdsTable extends Migration
         Schema::create('ids', function (Blueprint $table) {
             $table->increments('id');
             $table->string('value');
-            $table->integer('type');
+            $table->integer('type')->unsigned();
             $table->timestamps();
         });
     }
