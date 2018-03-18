@@ -16,7 +16,7 @@ class CreateTournamentsTable extends Migration
         Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('typ')->unsigned();
+            $table->integer('ruleset')->unsigned();
             $table->integer('weaponclass')->unsigned();
             $table->integer('ageclass')->unsigned();
             $table->integer('sex_id')->unsigned();
