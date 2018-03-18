@@ -17,7 +17,7 @@ class CreateTournamentsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('typ')->unsigned();
-            $table->integer('weapon')->unsigned();
+            $table->integer('weaponclass')->unsigned();
             $table->integer('ageclass')->unsigned();
             $table->integer('sex_id')->unsigned();
             $table->timestamps();
