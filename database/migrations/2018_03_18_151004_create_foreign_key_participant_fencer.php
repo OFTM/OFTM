@@ -26,7 +26,7 @@ class CreateForeignKeyParticipantFencer extends Migration
     public function down()
     {
         Schema::table('participants', function (Blueprint $table) {
-            $table->dropForeign('participant_fencer_foreign');
+            $table->dropForeign('participants_fencer_foreign');
         });
     }
 }

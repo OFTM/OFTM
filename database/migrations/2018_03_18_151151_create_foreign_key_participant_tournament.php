@@ -26,7 +26,7 @@ class CreateForeignKeyParticipantTournament extends Migration
     public function down()
     {
         Schema::table('participants', function (Blueprint $table) {
-            $table->dropForeign('participant_tournament_foreign');
+            $table->dropForeign('participants_tournament_foreign');
         });
     }
 }
