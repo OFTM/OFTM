@@ -13,7 +13,7 @@ class CreateForeignKeyParticipantFencer extends Migration
      */
     public function up()
     {
-        Schema::table('participant', function (Blueprint $table) {
+        Schema::table('participants', function (Blueprint $table) {
             $table->foreign('fencer')->references('id')->on('fencers');
         });
     }
@@ -25,7 +25,7 @@ class CreateForeignKeyParticipantFencer extends Migration
      */
     public function down()
     {
-        Schema::table('participant', function (Blueprint $table) {
+        Schema::table('participants', function (Blueprint $table) {
             $table->dropForeign('participant_fencer_foreign');
         });
     }
