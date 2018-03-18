@@ -17,6 +17,7 @@ class CreateIdsTable extends Migration
             $table->increments('id');
             $table->string('value');
             $table->integer('type')->unsigned();
+            $table->integer('fencer')->unsigned();
             $table->timestamps();
         });
     }
