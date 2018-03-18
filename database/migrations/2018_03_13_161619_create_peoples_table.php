@@ -17,6 +17,8 @@ class CreatePeoplesTable extends Migration
             $table->increments('id');
             $table->string('forename');
             $table->string('surname');
+            $table->date('birthdate');
+            $table->integer('sex_id')->unsigned();
             $table->timestamps();
         });
     }
