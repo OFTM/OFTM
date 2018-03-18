@@ -14,7 +14,7 @@ class CreateForeignKeyIdFencer extends Migration
     public function up()
     {
         Schema::table('ids', function (Blueprint $table) {
-            $table->foreign('fencer')->references('id')->on('id_types');
+            $table->foreign('fencer')->references('id')->on('fencers');
         });
     }
 
