@@ -32,6 +32,11 @@ const app = new Vue({
             document.getElementById('slideout-button').classList.remove("fa-angle-left");
             document.getElementById('slideout-button').classList.add("fa-angle-right");
         }
+    },
+    mounted: function () {
+        if (window.innerWidth > 768) {
+            this.$children[0].slideout.toggle();
+        }
     }
 });
 
