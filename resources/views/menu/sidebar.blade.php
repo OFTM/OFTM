@@ -1,4 +1,4 @@
-<Slideout menu="#menu" panel="#panel" :toggle-Selectors="['.toggle-button']" @on-open="open">
+<Slideout menu="#menu" panel="#panel" :toggle-Selectors="['.toggle-button']" @on-open="open" padding="180px">
     <nav id="menu">
         <div class="menu-head">
             <i class="fa fa-trophy fa-2x logo"></i>
@@ -7,20 +7,36 @@
         <div class="menu-main">
             <ul>
                 <li>
-                    <i class="fa fa-user fa-2x logo"></i>
-                    <span>Teilnehmerkartei</span>
+                    <a href="#">
+                        <section>
+                            <i class="fa fa-user fa-2x logo"></i>
+                            <span>Teilnehmerkartei</span>
+                        </section>
+                    </a>
                 </li>
                 <li>
-                    <i class="fa fa-user fa-2x logo"></i>
-                    <span>Teilnehmerkartei</span>
+                    <a href="#">
+                        <section>
+                            <i class="fa fa-user fa-2x logo"></i>
+                            <span>Teilnehmerkartei</span>
+                        </section>
+                    </a>
                 </li>
                 <li>
-                    <i class="fa fa-user fa-2x logo"></i>
-                    <span>Teilnehmerkartei</span>
+                    <a href="#">
+                        <section>
+                            <i class="fa fa-user fa-2x logo"></i>
+                            <span>Teilnehmerkartei</span>
+                        </section>
+                    </a>
                 </li>
                 <li>
-                    <i class="fa fa-user fa-2x logo"></i>
-                    <span>Teilnehmerkartei</span>
+                    <a href="#">
+                        <section>
+                            <i class="fa fa-user fa-2x logo"></i>
+                            <span>Teilnehmerkartei</span>
+                        </section>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -28,7 +44,7 @@
     <main id="panel">
         <header>
             <div>
-                <button class="toggle-button">☰</button>
+                <button class="btn btn-dark toggle-button btn-sm"><i class="fa fa-angle-right"></i></button>
                 Panel
             </div>
         </header>
