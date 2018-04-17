@@ -7,20 +7,7 @@
         </div>
         <div class="menu-main">
             <ul>
-                @foreach($Sidebar->roots() as $item)
-                    <li>
-                        <a @lm-attrs($item) href="{!! $item->url() !!}" @lm-endattrs>
-                            <section>
-                                @if($item->icon)
-                                    <i class="fa fa-{!! $item->icon !!} fa-2x logo"></i>
-                                @else
-                                    <i class="fa logo"></i>
-                                @endif
-                                <span>{!! $item->title !!}</span>
-                            </section>
-                        </a>
-                    </li>
-                @endforeach
+                @include('menu.sidebar-item', ['items' => $Sidebar->roots()])
             </ul>
         </div>
     </nav>
