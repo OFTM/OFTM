@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -15,8 +14,29 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+
+import Vue from 'vue'
+import Slideout from 'vue-slideout'
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    components: {
+        Slideout
+    },
+    methods: {
+        open: function () {
+            document.getElementById('slideout-button').classList.remove("fa-angle-right");
+            document.getElementById('slideout-button').classList.add("fa-angle-left");
+        },
+        close: function () {
+            document.getElementById('slideout-button').classList.remove("fa-angle-left");
+            document.getElementById('slideout-button').classList.add("fa-angle-right");
+        }
+    },
+    mounted: function () {
+        if (window.innerWidth > 768) {
+            this.$children[0].slideout.toggle();
+        }
+    }
 });
+
