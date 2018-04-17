@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForeignKeysForFencersPeoples extends Migration
+class CreateForeignKeysRefereesPeople extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateForeignKeysForFencersPeoples extends Migration
      */
     public function up()
     {
-        Schema::table('fencers', function (Blueprint $table) {
-           $table->foreign('people_id')->references('id')->on('peoples');
+        Schema::table('referees', function (Blueprint $table) {
+            $table->foreign('people_id')->references('id')->on('people');
         });
     }
 
@@ -25,8 +25,8 @@ class CreateForeignKeysForFencersPeoples extends Migration
      */
     public function down()
     {
-        Schema::table('fencers', function (Blueprint $table) {
-            $table->dropForeign('fencers_people_id_foreign');
+        Schema::table('referees', function (Blueprint $table) {
+            $table->dropForeign('referees_people_id_foreign');
         });
     }
 }
