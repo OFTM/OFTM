@@ -97,3 +97,12 @@ body {
 .menu-main section {
   display: table;
 }
+
+.logo {
+  height: 25px;
+  width: 25px;
+}
+
+.menu-main ul>li>a.active {
+  font-weight: bold;
+}
