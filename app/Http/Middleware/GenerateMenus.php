@@ -16,10 +16,7 @@ class GenerateMenus
     public function handle($request, Closure $next)
     {
         \Menu::make('Sidebar', function ($menu) {
-           $menu->add('Home', "blubb")->data('icon', 'users');
-           $menu->home->active();
-           $menu->add('Test', "blibb");
-           $menu->test->add('TestChild', "blibb2");
+           $menu->add('Stammdaten', ['action' => 'FencerController@index'])->data('icon', 'users');
         });
 
         return $next($request);

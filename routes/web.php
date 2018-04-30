@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('base');
 });
+
+Route::resource('fencers', 'FencerController');

@@ -16,7 +16,11 @@ window.Vue = require('vue');
 
 
 import Vue from 'vue'
+import VueEvents from 'vue-events'
 import Slideout from 'vue-slideout'
+
+Vue.component('fencertable', require('./components/fencertable'))
+Vue.use(VueEvents)
 
 const app = new Vue({
     el: '#app',
