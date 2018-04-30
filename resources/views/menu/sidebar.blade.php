@@ -17,7 +17,7 @@
                 <button class="btn btn-outline-dark toggle-button"><i id="slideout-button"
                                                                       class="fa fa-angle-right"></i></button>
             </div>
-            @yield('content')
         </header>
+        @yield('content')
     </main>
 </Slideout>
