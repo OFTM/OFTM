@@ -43,6 +43,10 @@ body {
   overflow: hidden;
 }
 
+.slideout-open .slideout-panel {
+  width: calc(100% - 180px);
+}
+
 .slideout-open .slideout-menu {
   display: block;
 }

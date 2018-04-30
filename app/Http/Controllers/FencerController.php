@@ -46,7 +46,7 @@ class FencerController extends Controller
      */
     public function show(fencer $fencer)
     {
-        //
+        return view('fencer.show', ['fencer' => $fencer]);
     }
 
     /**
