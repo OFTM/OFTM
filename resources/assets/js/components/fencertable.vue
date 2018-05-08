@@ -10,10 +10,15 @@
                   :append-params="moreParams"
         >
             <template slot="actions" slot-scope="props">
-                <div class="btn-group">
-                    <a role="button" class="btn btn-primary" :href="'/fencers/' + props.rowData.id"><i class="fa fa-edit"></i></a>
-                    <a role="button" class="btn btn-danger" :href="'/fencers/' + props.rowData.id"><i class="fa fa-trash"></i></a>
-                </div>
+                <form method="post" :action="'/fencers/' + props.rowData.id" class="form-inline pull-right">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="_token" :value="csrf_token">
+                    <div class="btn-group form" role="group">
+                        <a class="btn btn-primary" :href="'/fencers/' + props.rowData.id + '/edit'"><i
+                                class="fa fa-edit"></i></a>
+                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                    </div>
+                </form>
             </template>
         </vuetable>
         <vuetable-pagination ref="pagination"
@@ -67,11 +72,13 @@
                 ],
                 css: CssConfig,
                 moreParams: {},
+                csrf_token: '',
             }
         },
         mounted() {
             this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
             this.$events.$on('filter-reset', e => this.onFilterReset())
+            this.csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         methods: {
             sexLabel(value) {
@@ -85,15 +92,15 @@
             onChangePage(page) {
                 this.$refs.vuetable.changePage(page)
             },
-            onFilterSet (filterText) {
+            onFilterSet(filterText) {
                 this.moreParams = {
                     'filter': filterText
                 }
-                Vue.nextTick( () => this.$refs.vuetable.refresh())
+                Vue.nextTick(() => this.$refs.vuetable.refresh())
             },
-            onFilterReset () {
+            onFilterReset() {
                 this.moreParams = {}
-                Vue.nextTick( () => this.$refs.vuetable.refresh())
+                Vue.nextTick(() => this.$refs.vuetable.refresh())
             }
         }
     }

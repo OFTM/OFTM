@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\fencer;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class FencerController extends Controller
 {
@@ -46,7 +47,7 @@ class FencerController extends Controller
      */
     public function show(fencer $fencer)
     {
-        return view('fencer.show', ['fencer' => $fencer]);
+        return view('fencer.view', ['fencer' => $fencer]);
     }
 
     /**
@@ -57,7 +58,7 @@ class FencerController extends Controller
      */
     public function edit(fencer $fencer)
     {
-        //
+        return view('fencer.edit', ['fencer' => $fencer]);
     }
 
     /**
@@ -69,17 +70,24 @@ class FencerController extends Controller
      */
     public function update(Request $request, fencer $fencer)
     {
-        //
+        $validated = $request->validate([
+            'person-forename' => 'required',
+            'person-surname' => 'required',
+            'person-birthdate' => 'required|date'
+        ]);
+        $fencer->person()->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => $validated['person-birthdate']]);
+        return view('fencer.view', ['fencer' => $fencer]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\fencer  $fencer
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\RedirectResponse
      */
     public function destroy(fencer $fencer)
     {
-        //
+        $fencer->delete();
+        return redirect()->route('fencers.index');
     }
 }
