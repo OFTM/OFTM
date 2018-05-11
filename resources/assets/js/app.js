@@ -33,6 +33,7 @@ const app = new Vue({
     data() {
         return {
             languages: lang,
+            dateformat: "dd.MM.yyyy",
         };
     },
     methods: {
