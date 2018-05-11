@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\fencer;
+use App\people;
+use App\sex;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
@@ -25,7 +28,7 @@ class FencerController extends Controller
      */
     public function create()
     {
-        //
+        return view('fencer.create');
     }
 
     /**
@@ -36,7 +39,21 @@ class FencerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'person-forename' => 'required',
+            'person-surname' => 'required',
+            'person-birthdate' => 'required|date',
+            'person-sex' => 'required'
+        ]);
+
+        $fencer = new fencer;
+        $person = new people(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
+        $sex = sex::all()->where('name', 'IS', $validated['person-sex'])->first();
+        $person->sex()->associate($sex);
+        $person->save();
+        $fencer->person()->associate($person);
+        $fencer->save();
+        return view('fencer.view', ['fencer' => $fencer]);
     }
 
     /**

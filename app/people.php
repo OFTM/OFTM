@@ -13,4 +13,11 @@ class people extends Model
     {
         return $this->belongsTo('App\sex', 'sex_id');
     }
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'birthdate'
+    ];
+
 }

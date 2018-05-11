@@ -1,11 +1,17 @@
 <template>
-    <div class="float-right">
-        <div class="form-inline search">
-            <label class="sr-only" for="filter-input">Suche</label>
-            <input type="text" v-model="filterText" class="form-control search-element" id="filter-input" @keyup.enter="doFilter" placeholder="Suche..." disabled>
-            <div class="btn-group">
-                <button class="btn btn-primary" @click="doFilter"><i class="fa fa-search"></i></button>
-                <button class="btn btn-danger" @click="resetFilter"><i class="fa fa-times"></i></button>
+    <div>
+        <div class="float-left">
+            <a class="btn btn-success" href="/fencers/create"><i class="fa fa-plus"></i></a>
+        </div>
+        <div class="float-right">
+            <div class="form-inline search">
+                <label class="sr-only" for="filter-input">Suche</label>
+                <input type="text" v-model="filterText" class="form-control search-element" id="filter-input"
+                       @keyup.enter="doFilter" placeholder="Suche..." disabled>
+                <div class="btn-group">
+                    <button class="btn btn-primary" @click="doFilter"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-danger" @click="resetFilter"><i class="fa fa-times"></i></button>
+                </div>
             </div>
         </div>
     </div>
