@@ -24,8 +24,7 @@
                     </tr>
                     <tr>
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
-                        <td><input type="text" class="form-control" name="person-birthdate" id="person-birthdate"></td>
-                        <!-- TODO: Datepicker -->
+                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de"></datepicker></td>
                     </tr>
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>
@@ -48,3 +47,9 @@
         </div>
     </div>
 @endsection
+<script>
+    import Datepicker from "vuejs-datepicker/src/components/Datepicker";
+    export default {
+        components: {Datepicker}
+    }
+</script>

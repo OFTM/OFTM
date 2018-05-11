@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
-                        <td><input type="text" class="form-control" name="person-birthdate" value="{{ $fencer->person->birthdate->toDateString() }}" id="person-birthdate"></td> <!-- TODO: Datepicker -->
+                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de" :value="{{ $fencer->person->birthdate->toDateString() }}"></datepicker></td>
                     </tr>
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>

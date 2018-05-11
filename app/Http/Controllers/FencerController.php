@@ -92,7 +92,7 @@ class FencerController extends Controller
             'person-surname' => 'required',
             'person-birthdate' => 'required|date'
         ]);
-        $fencer->person()->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => $validated['person-birthdate']]);
+        $fencer->person()->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
         return view('fencer.view', ['fencer' => $fencer]);
     }
 
