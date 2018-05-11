@@ -18,6 +18,24 @@ class CreateWeaponclassesTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('weaponclasses')->insert(
+            array(
+                'name' => 'Degen'
+            )
+        );
+
+        DB::table('weaponclasses')->insert(
+            array(
+                'name' => 'Florett'
+            )
+        );
+
+        DB::table('weaponclasses')->insert(
+            array(
+                'name' => 'Säbel'
+            )
+        );
     }
 
     /**
