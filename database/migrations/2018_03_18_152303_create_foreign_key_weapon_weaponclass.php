@@ -14,7 +14,7 @@ class CreateForeignKeyWeaponWeaponclass extends Migration
     public function up()
     {
         Schema::table('weapons', function (Blueprint $table) {
-            $table->foreign('weaponclass')->references('id')->on('weaponclasses');
+            $table->foreign('weaponclass_id')->references('id')->on('weaponclasses');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateForeignKeyWeaponWeaponclass extends Migration
     public function down()
     {
         Schema::table('weapons', function (Blueprint $table) {
-            $table->dropForeign('weapons_weaponclass_foreign');
+            $table->dropForeign('weapons_weaponclass_id_foreign');
         });
     }
 }

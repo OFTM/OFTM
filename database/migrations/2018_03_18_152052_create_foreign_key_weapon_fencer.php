@@ -14,7 +14,7 @@ class CreateForeignKeyWeaponFencer extends Migration
     public function up()
     {
         Schema::table('weapons', function (Blueprint $table) {
-            $table->foreign('fencer')->references('id')->on('fencers');
+            $table->foreign('fencer_id')->references('id')->on('fencers');
         });
     }
 

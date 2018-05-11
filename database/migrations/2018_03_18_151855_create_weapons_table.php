@@ -15,8 +15,8 @@ class CreateWeaponsTable extends Migration
     {
         Schema::create('weapons', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fencer')->unsigned();
-            $table->integer('weaponclass')->unsigned();
+            $table->integer('fencer_id')->unsigned();
+            $table->integer('weaponclass_id')->unsigned();
             $table->timestamps();
         });
     }
