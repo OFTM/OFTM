@@ -108,8 +108,9 @@ class FencerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\fencer  $fencer
-     * @return Illuminate\Http\RedirectResponse
+     * @param  \App\fencer $fencer
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(fencer $fencer)
     {
