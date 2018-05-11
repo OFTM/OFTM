@@ -24,13 +24,16 @@
                     </tr>
                     <tr>
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
-                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de"></datepicker></td>
+                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de" :format="dateformat"></datepicker></td>
                     </tr>
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>
                         <td>
-                            <input type="text" class="form-control" name="person-sex" id="person-sex">
-                            <!-- TODO: Dropdown -->
+                            <select class="custom-select" id="person-sex" name="person-sex">
+                                @foreach($sexes as $sex)
+                                        <option>{{ $sex->name }}</option>
+                                @endforeach
+                            </select>
                         </td>
                     </tr>
                     <tr>

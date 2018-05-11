@@ -30,7 +30,15 @@
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>
                         <td>
-                            <input type="text" class="form-control" name="person-sex" value="{{ $fencer->person->sex->name }}" id="person-sex"> <!-- TODO: Dropdown -->
+                            <select class="custom-select" id="person-sex" name="person-sex">
+                                @foreach($sexes as $sex)
+                                    @if($sex->id === $fencer->person->sex->id)
+                                        <option selected>{{ $sex->name }}</option>
+                                    @else
+                                    <option>{{ $sex->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </td>
                     </tr>
                     <tr>

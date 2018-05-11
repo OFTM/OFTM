@@ -28,7 +28,7 @@ class FencerController extends Controller
      */
     public function create()
     {
-        return view('fencer.create');
+        return view('fencer.create', ['sexes' => sex::all()]);
     }
 
     /**
@@ -53,7 +53,7 @@ class FencerController extends Controller
         $person->save();
         $fencer->person()->associate($person);
         $fencer->save();
-        return view('fencer.view', ['fencer' => $fencer]);
+        return redirect()->route('fencers.show', ['fencer' => $fencer]);
     }
 
     /**
@@ -75,7 +75,7 @@ class FencerController extends Controller
      */
     public function edit(fencer $fencer)
     {
-        return view('fencer.edit', ['fencer' => $fencer]);
+        return view('fencer.edit', ['fencer' => $fencer, 'sexes' => sex::all()]);
     }
 
     /**
@@ -90,9 +90,18 @@ class FencerController extends Controller
         $validated = $request->validate([
             'person-forename' => 'required',
             'person-surname' => 'required',
-            'person-birthdate' => 'required|date'
+            'person-birthdate' => 'required|date',
+            'person-sex' => 'required'
         ]);
-        $fencer->person()->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
+        $fencer->load('person');
+        $fencer->person->load('sex');
+        $fencer->person->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
+        if($fencer->person->sex->name != $validated['person-sex']) {
+            $fencer->person->sex()->dissociate();
+            $fencer->person->sex()->associate(sex::all()->where('name', 'IS', $validated['person-sex'])->first());
+        }
+        $fencer->save();
+        $fencer->person->save();
         return view('fencer.view', ['fencer' => $fencer]);
     }
 
