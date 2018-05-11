@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td>Geburtsdatum</td>
-                    <td>{{ $fencer->person->birthdate }}</td>
+                    <td>{{ $fencer->person->birthdate->toDateString() }}</td>
                 </tr>
                 <tr>
                     <td>Geschlecht</td>
