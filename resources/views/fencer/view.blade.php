@@ -33,7 +33,17 @@
                 <tr>
                     <td>Geschlecht</td>
                     <td>
-                        {{ $fencer->person->sex->name }}
+                        @switch($fencer->person->sex->name)
+                            @case("male")
+                                <i class="fa fa-15x fa-male"></i>
+                            @break
+                            @case("female")
+                                <i class="fa fa-15x fa-female"></i>
+                            @break
+                            @default
+                                {{ $fencer->person->sex->name }}
+                            @break
+                        @endswitch
                     </td>
                 </tr>
                 </tbody>
