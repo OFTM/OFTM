@@ -11,4 +11,8 @@ class fencer extends Model
     public function person() {
         return $this->belongsTo('App\people', 'people_id');
     }
+
+    public function weapons() {
+        return $this->hasMany('App\weapon', 'fencer_id');
+    }
 }
