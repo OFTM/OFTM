@@ -14,6 +14,7 @@
                     <input type="hidden" name="_method" value="delete">
                     <input type="hidden" name="_token" :value="csrf_token">
                     <div class="btn-group form" role="group">
+                        <a class="btn btn-outline-secondary" :href="'/fencers/' + props.rowData.id"><i class="fa fa-eye"></i></a>
                         <a class="btn btn-primary" :href="'/fencers/' + props.rowData.id + '/edit'"><i
                                 class="fa fa-edit"></i></a>
                         <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
