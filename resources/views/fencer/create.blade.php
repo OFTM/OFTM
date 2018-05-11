@@ -24,16 +24,31 @@
                     </tr>
                     <tr>
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
-                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de" :format="dateformat"></datepicker></td>
+                        <td>
+                            <datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true"
+                                        :language="languages.de" :format="dateformat"></datepicker>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>
                         <td>
                             <select class="custom-select" id="person-sex" name="person-sex">
                                 @foreach($sexes as $sex)
-                                        <option>{{ $sex->name }}</option>
+                                    <option>{{ $sex->name }}</option>
                                 @endforeach
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="weapons">Waffen</label></td>
+                        <td>
+                            @foreach($weaponclasses as $weaponclass)
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="w{{ $weaponclass->id }}" name="weaponclasses[]" value="{{ $weaponclass->id }}">
+                                    <label class="custom-control-label"
+                                           for="w{{ $weaponclass->id }}">{{ $weaponclass->name }}</label>
+                                </div>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
@@ -52,6 +67,7 @@
 @endsection
 <script>
     import Datepicker from "vuejs-datepicker/src/components/Datepicker";
+
     export default {
         components: {Datepicker}
     }

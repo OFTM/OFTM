@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\fencer;
 use App\people;
 use App\sex;
+use App\weaponclass;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+use App\weapon;
 
 class FencerController extends Controller
 {
@@ -28,7 +29,7 @@ class FencerController extends Controller
      */
     public function create()
     {
-        return view('fencer.create', ['sexes' => sex::all()]);
+        return view('fencer.create', ['sexes' => sex::all(), 'weaponclasses' => weaponclass::all()]);
     }
 
     /**
@@ -45,13 +46,21 @@ class FencerController extends Controller
             'person-birthdate' => 'required|date',
             'person-sex' => 'required'
         ]);
-
         $fencer = new fencer;
         $person = new people(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
         $sex = sex::all()->where('name', 'IS', $validated['person-sex'])->first();
         $person->sex()->associate($sex);
         $person->save();
         $fencer->person()->associate($person);
+        $fencer->save();
+        foreach($request->input('weaponclasses') as $weaponclass) {
+            $weapon = new weapon;
+            $class = weaponclass::all()->where('id', 'IS', $weaponclass)->first();
+            $weapon->weaponclass()->associate($class);
+            $weapon->fencer()->associate($fencer);
+            $weapon->save();
+            #$fencer->weapons()->save($weapon);
+        }
         $fencer->save();
         return redirect()->route('fencers.show', ['fencer' => $fencer]);
     }
