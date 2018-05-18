@@ -84,7 +84,7 @@ class FencerController extends Controller
      */
     public function edit(fencer $fencer)
     {
-        return view('fencer.edit', ['fencer' => $fencer, 'sexes' => sex::all()]);
+        return view('fencer.edit', ['fencer' => $fencer, 'sexes' => sex::all(), 'weaponclasses' => weaponclass::all()]);
     }
 
     /**
@@ -105,13 +105,32 @@ class FencerController extends Controller
         $fencer->load('person');
         $fencer->person->load('sex');
         $fencer->person->update(['forename' => $validated['person-forename'], 'surname' => $validated['person-surname'], 'birthdate' => Carbon::parse($validated['person-birthdate'])]);
-        if($fencer->person->sex->name != $validated['person-sex']) {
+        if ($fencer->person->sex->name != $validated['person-sex']) {
             $fencer->person->sex()->dissociate();
             $fencer->person->sex()->associate(sex::all()->where('name', 'IS', $validated['person-sex'])->first());
         }
         $fencer->save();
         $fencer->person->save();
-        return view('fencer.view', ['fencer' => $fencer]);
+        foreach (weaponclass::all() as $weaponclass) {
+            if (count($fencer->weapons()->whereHas('weaponclass', function ($querry) use ($weaponclass) {
+                $querry->where('id', $weaponclass->id);
+            })->get())) {
+                if (!$request->has('weaponclasses') || ($request->has('weaponclasses') && !in_array($weaponclass->id, $request->input('weaponclasses')))) {
+                    $fencer->weapons()->whereHas('weaponclass', function ($querry) use ($weaponclass) {
+                        $querry->where('id', $weaponclass->id);
+                    })->delete();
+                }
+            } else {
+                if ($request->has('weaponclasses') && in_array($weaponclass->id, $request->input('weaponclasses'))) {
+                    $weapon = new weapon();
+                    $weapon->fencer()->associate($fencer);
+                    $weapon->weaponclass()->associate($weaponclass);
+                    $weapon->save();
+                }
+            }
+        }
+        $fencer->save();
+        return redirect()->route('fencers.show', ['fencer' => $fencer]);
     }
 
     /**

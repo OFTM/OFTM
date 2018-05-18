@@ -17,15 +17,21 @@
                     <tbody>
                     <tr>
                         <td><label for="person-forename">Vorname:</label></td>
-                        <td><input type="text" class="form-control" name="person-forename" value="{{ $fencer->person->forename }}" id="person-forename"></td>
+                        <td><input type="text" class="form-control" name="person-forename"
+                                   value="{{ $fencer->person->forename }}" id="person-forename"></td>
                     </tr>
                     <tr>
                         <td><label for="person-surname">Nachname:</label></td>
-                        <td><input type="text" class="form-control" name="person-surname" value="{{ $fencer->person->surname }}" id="person-surname"></td>
+                        <td><input type="text" class="form-control" name="person-surname"
+                                   value="{{ $fencer->person->surname }}" id="person-surname"></td>
                     </tr>
                     <tr>
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
-                        <td><datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true" :language="languages.de" :value="{{ $fencer->person->birthdate->toDateString() }}"></datepicker></td>
+                        <td>
+                            <datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true"
+                                        :language="languages.de"
+                                        :value="{{ $fencer->person->birthdate->toDateString() }}"></datepicker>
+                        </td>
                     </tr>
                     <tr>
                         <td><label for="person-sex">Geschlecht</label></td>
@@ -35,10 +41,35 @@
                                     @if($sex->id === $fencer->person->sex->id)
                                         <option selected>{{ $sex->name }}</option>
                                     @else
-                                    <option>{{ $sex->name }}</option>
+                                        <option>{{ $sex->name }}</option>
                                     @endif
                                 @endforeach
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="weapons">Waffen</label></td>
+                        <td>
+                            @foreach($weaponclasses as $weaponclass)
+                                <div class="custom-control custom-checkbox">
+                                    @if(count($fencer->weapons) > 0)
+                                        @if(count($fencer->weapons()->whereHas('weaponclass', function ($querry) use ($weaponclass) {$querry->where('id', $weaponclass->id);})->get()) > 0)
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="w{{ $weaponclass->id }}" name="weaponclasses[]"
+                                                   value="{{ $weaponclass->id }}" checked>
+                                        @else
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="w{{ $weaponclass->id }}" name="weaponclasses[]"
+                                                   value="{{ $weaponclass->id }}">
+                                        @endif
+                                    @else
+                                        <input type="checkbox" class="custom-control-input" id="w{{ $weaponclass->id }}"
+                                               name="weaponclasses[]" value="{{ $weaponclass->id }}">
+                                    @endif
+                                    <label class="custom-control-label"
+                                           for="w{{ $weaponclass->id }}">{{ $weaponclass->name }}</label>
+                                </div>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
