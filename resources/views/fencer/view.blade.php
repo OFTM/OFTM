@@ -46,6 +46,16 @@
                         @endswitch
                     </td>
                 </tr>
+                <tr>
+                    <td>Waffen</td>
+                    <td>
+                        <ul>
+                        @foreach($fencer->weapons as $weapon)
+                                <li>{{ $weapon->weaponclass->name }}</li>
+                        @endforeach
+                        </ul>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
