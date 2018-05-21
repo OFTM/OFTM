@@ -31,6 +31,18 @@
                     <td>{{ $fencer->person->birthdate->format('d.m.Y') }} ({{ $fencer->person->birthdate->age }})</td>
                 </tr>
                 <tr>
+                    <td>Altersklassen</td>
+                    <td>
+                        <ul>
+                            @foreach($ageclasses as $ageclass)
+                                @if($fencer->person->birthdate->age >= $ageclass->min && $fencer->person->birthdate->age <= $ageclass->max)
+                                    <li>{{ $ageclass->name }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
                     <td>Geschlecht</td>
                     <td>
                         @switch($fencer->person->sex->name)

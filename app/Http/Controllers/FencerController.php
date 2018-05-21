@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ageclass;
 use App\fencer;
 use App\people;
 use App\sex;
@@ -73,7 +74,7 @@ class FencerController extends Controller
      */
     public function show(fencer $fencer)
     {
-        return view('fencer.view', ['fencer' => $fencer]);
+        return view('fencer.view', ['fencer' => $fencer, 'ageclasses' => ageclass::all()]);
     }
 
     /**
