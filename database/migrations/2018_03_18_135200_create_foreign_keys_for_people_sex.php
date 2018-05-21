@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForeignKeyWeaponWeaponclass extends Migration
+class CreateForeignKeysForPeopleSex extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateForeignKeyWeaponWeaponclass extends Migration
      */
     public function up()
     {
-        Schema::table('weapons', function (Blueprint $table) {
-            $table->foreign('weaponclass_id')->references('id')->on('weaponclasses');
+        Schema::table('people', function (Blueprint $table) {
+            $table->foreign('sex_id')->references('id')->on('sexes');
         });
     }
 
@@ -25,8 +25,8 @@ class CreateForeignKeyWeaponWeaponclass extends Migration
      */
     public function down()
     {
-        Schema::table('weapons', function (Blueprint $table) {
-            $table->dropForeign('weapons_weaponclass_id_foreign');
+        Schema::table('people', function (Blueprint $table) {
+            $table->dropForeign('people_sex_id_foreign');
         });
     }
 }

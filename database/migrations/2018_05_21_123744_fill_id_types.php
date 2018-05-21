@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForeignKeysForFencersPeoples extends Migration
+class FillIdTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateForeignKeysForFencersPeoples extends Migration
      */
     public function up()
     {
-        Schema::table('fencers', function (Blueprint $table) {
-           $table->foreign('people_id')->references('id')->on('peoples');
-        });
+        DB::table('id_types')->insert(
+            array(
+                'name' => 'Fechtpass'
+            )
+        );
     }
 
     /**
@@ -25,8 +27,6 @@ class CreateForeignKeysForFencersPeoples extends Migration
      */
     public function down()
     {
-        Schema::table('fencers', function (Blueprint $table) {
-            $table->dropForeign('fencers_people_id_foreign');
-        });
+        //
     }
 }

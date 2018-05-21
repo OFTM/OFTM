@@ -17,7 +17,16 @@
                 <button class="btn btn-outline-dark toggle-button"><i id="slideout-button"
                                                                       class="fa fa-angle-right"></i></button>
             </div>
-            @yield('content')
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </header>
+        @yield('content')
     </main>
 </Slideout>

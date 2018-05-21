@@ -14,7 +14,7 @@ class CreateForeignKeyIdIdType extends Migration
     public function up()
     {
         Schema::table('ids', function (Blueprint $table) {
-            $table->foreign('type')->references('id')->on('id_types');
+            $table->foreign('type_id')->references('id')->on('id_types');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateForeignKeyIdIdType extends Migration
     public function down()
     {
         Schema::table('ids', function (Blueprint $table) {
-            $table->dropForeign('ids_type_foreign');
+            $table->dropForeign('ids_type_id_foreign');
         });
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\fencer;
+use App\Http\Resources\FencerResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,15 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('fencers', function () {
+
+    $collection = FencerResource::collection(Fencer::paginate(request('per_page')));
+
+    return $collection;
+});
+
+Route::get('fencer/{id}', function ($id) {
+    return App\fencer::find($id)->load('person', 'person.sex');
 });

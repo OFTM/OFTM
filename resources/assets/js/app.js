@@ -16,12 +16,25 @@ window.Vue = require('vue');
 
 
 import Vue from 'vue'
+import VueEvents from 'vue-events'
 import Slideout from 'vue-slideout'
+import Datepicker from 'vuejs-datepicker'
+import * as lang from "vuejs-datepicker/src/locale";
+
+Vue.component('fencertable', require('./components/fencertable'))
+Vue.use(VueEvents)
 
 const app = new Vue({
     el: '#app',
     components: {
-        Slideout
+        Slideout,
+        Datepicker,
+    },
+    data() {
+        return {
+            languages: lang,
+            dateformat: "dd.MM.yyyy",
+        };
     },
     methods: {
         open: function () {
@@ -39,4 +52,3 @@ const app = new Vue({
         }
     }
 });
-
