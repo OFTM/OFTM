@@ -59,6 +59,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>IDs</td>
+                    <td>
+                        @foreach($fencer->ids as $id)
+                            {{ $id->type->name }}: {{ $id->value }}
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
                     <td>Waffen</td>
                     <td>
                         <ul>
