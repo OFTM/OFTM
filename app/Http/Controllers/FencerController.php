@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ageclass;
 use App\fencer;
+use App\id;
+use App\id_type;
 use App\people;
 use App\sex;
 use App\weaponclass;
@@ -30,7 +32,7 @@ class FencerController extends Controller
      */
     public function create()
     {
-        return view('fencer.create', ['sexes' => sex::all(), 'weaponclasses' => weaponclass::all()]);
+        return view('fencer.create', ['sexes' => sex::all(), 'weaponclasses' => weaponclass::all(), 'id_types' => id_type::all()]);
     }
 
     /**
@@ -61,6 +63,15 @@ class FencerController extends Controller
             $weapon->fencer()->associate($fencer);
             $weapon->save();
             #$fencer->weapons()->save($weapon);
+        }
+        foreach (id_type::all() as $id_type) {
+            if($request->has($id_type->name)){
+                $id = new id();
+                $id->fencer()->associate($fencer);
+                $id->type()->associate($id_type);
+                $id->value = $request->input($id_type->name);
+                $id->save();
+            }
         }
         $fencer->save();
         return redirect()->route('fencers.show', ['fencer' => $fencer]);

@@ -40,6 +40,15 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>IDs</td>
+                        <td>
+                            @foreach($id_types as $id)
+                                <label for="{{ $id->name }}" class="sr-only">{{ $id->name }}</label>
+                                <input type="text" class="form-control" name="{{ $id->name }}" id="{{ $id->name }}" placeholder="{{ $id->name }}">
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
                         <td><label for="weapons">Waffen</label></td>
                         <td>
                             @foreach($weaponclasses as $weaponclass)
