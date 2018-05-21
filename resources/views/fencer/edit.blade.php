@@ -48,6 +48,19 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>IDs</td>
+                        <td>
+                            @foreach($id_types as $id)
+                                <label for="{{ $id->name }}">{{ $id->name }}</label>
+                                @if(count($fencer->ids()->whereHas('type', function($query) use ($id) {$query->where('name', $id->name);})->get()) > 0 )
+                                    <input type="text" class="form-control" name="{{ $id->name }}" id="{{ $id->name }}" value="{{ $fencer->ids()->whereHas('type', function($query) use ($id) {$query->where('name', $id->name);})->first()->value }}">
+                                @else
+                                    <input type="text" class="form-control" name="{{ $id->name }}" id="{{ $id->name }}">
+                                @endif
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
                         <td><label for="weapons">Waffen</label></td>
                         <td>
                             @foreach($weaponclasses as $weaponclass)

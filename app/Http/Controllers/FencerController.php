@@ -96,7 +96,7 @@ class FencerController extends Controller
      */
     public function edit(fencer $fencer)
     {
-        return view('fencer.edit', ['fencer' => $fencer, 'sexes' => sex::all(), 'weaponclasses' => weaponclass::all()]);
+        return view('fencer.edit', ['fencer' => $fencer, 'sexes' => sex::all(), 'weaponclasses' => weaponclass::all(), 'id_types' => id_type::all()]);
     }
 
     /**
@@ -138,6 +138,21 @@ class FencerController extends Controller
                     $weapon->fencer()->associate($fencer);
                     $weapon->weaponclass()->associate($weaponclass);
                     $weapon->save();
+                }
+            }
+        }
+        foreach (id_type::all() as $id_type) {
+            if($request->has($id_type->name)){
+                if(count($fencer->ids()->whereHas('type', function($query) use ($id_type) {$query->where('name', $id_type->name);})->get()) > 0) {
+                    $id = id::all()->where('fencer_id', $fencer->id)->where('type_id', $id_type->id)->first();
+                    $id->value = $request->input($id_type->name);
+                    $id->save();
+                } else {
+                    $id = new id();
+                    $id->fencer()->associate($fencer);
+                    $id->type()->associate($id_type);
+                    $id->value = $request->input($id_type->name);
+                    $id->save();
                 }
             }
         }
