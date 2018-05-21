@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td>Geburtsdatum</td>
-                    <td>{{ $fencer->person->birthdate->format('d.m.Y') }}</td>
+                    <td>{{ $fencer->person->birthdate->format('d.m.Y') }} ({{ $fencer->person->birthdate->age }})</td>
                 </tr>
                 <tr>
                     <td>Geschlecht</td>
