@@ -11,8 +11,6 @@ class FencerSeeder extends Seeder
      */
     public function run()
     {
-        App\sex::create(['name' => 'male']);
-        App\sex::create(['name' => 'female']);
-        factory(\App\fencer::class, 10)->create();
+        factory(\App\fencer::class, 50)->create();
     }
 }
