@@ -22,6 +22,7 @@ import Datepicker from 'vuejs-datepicker'
 import * as lang from "vuejs-datepicker/src/locale";
 
 Vue.component('fencertable', require('./components/fencertable'))
+Vue.component('tournamenttable', require('./components/tournamenttable'))
 Vue.use(VueEvents)
 
 const app = new Vue({

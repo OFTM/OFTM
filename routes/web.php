@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('fencers', 'FencerController');
+Route::resource('tournament', 'TournamentController');

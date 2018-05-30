@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use App\fencer;
 use App\Http\Resources\FencerResource;
+use App\tournament;
+use App\Http\Resources\TournamentRessource;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,11 @@ Route::get('fencers', function () {
 
 Route::get('fencer/{id}', function ($id) {
     return App\fencer::find($id)->load('person', 'person.sex');
+});
+
+Route::get('tournaments', function () {
+
+    $collection = TournamentRessource::collection(Tournament::paginate(request('per_page')));
+
+    return $collection;
 });
