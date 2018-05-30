@@ -14,7 +14,7 @@ class CreateForeignKeyTournamentAgeclass extends Migration
     public function up()
     {
         Schema::table('tournaments', function (Blueprint $table) {
-            $table->foreign('ageclass')->references('id')->on('ageclasses');
+            $table->foreign('ageclass_id')->references('id')->on('ageclasses');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateForeignKeyTournamentAgeclass extends Migration
     public function down()
     {
         Schema::table('tournaments', function (Blueprint $table) {
-            $table->dropForeign('tournaments_ageclass_foreign');
+            $table->dropForeign('tournaments_ageclass_id_foreign');
         });
     }
 }
