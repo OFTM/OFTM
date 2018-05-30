@@ -18,6 +18,17 @@ class CreateSexesTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        DB::table('sexes')->insert(
+          array(
+              'name' => 'male'
+          )
+        );
+        DB::table('sexes')->insert(
+            array(
+                'name' => 'female'
+            )
+        );
     }
 
     /**
