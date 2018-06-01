@@ -26,7 +26,7 @@ class CreateForeignKeyWeaponFencer extends Migration
     public function down()
     {
         Schema::table('weapons', function (Blueprint $table) {
-            $table->dropForeign('weapons_fencer_foreign');
+            $table->dropForeign('weapons_fencer_id_foreign');
         });
     }
 }
