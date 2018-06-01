@@ -15,9 +15,9 @@ class CreateParticipantsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fencer')->unsigned();
-            $table->integer('tournament')->unsigned();
-            $table->boolean('paid');
+            $table->integer('fencer_id')->unsigned();
+            $table->integer('tournament_id')->unsigned();
+            $table->boolean('paid')->default(false);
             $table->timestamps();
         });
     }
