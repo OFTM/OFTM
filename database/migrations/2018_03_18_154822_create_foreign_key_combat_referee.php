@@ -14,7 +14,7 @@ class CreateForeignKeyCombatReferee extends Migration
     public function up()
     {
         Schema::table('combats', function (Blueprint $table) {
-            $table->foreign('referee')->references('id')->on('referees');
+            $table->foreign('referee_id')->references('id')->on('referees');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateForeignKeyCombatReferee extends Migration
     public function down()
     {
         Schema::table('combats', function (Blueprint $table) {
-            $table->dropForeign('combats_referee_foreign');
+            $table->dropForeign('combats_referee_id_foreign');
         });
     }
 }

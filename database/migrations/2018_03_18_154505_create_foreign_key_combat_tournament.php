@@ -14,7 +14,7 @@ class CreateForeignKeyCombatTournament extends Migration
     public function up()
     {
         Schema::table('combats', function (Blueprint $table) {
-            $table->foreign('tournament')->references('id')->on('tournaments');
+            $table->foreign('tournament_id')->references('id')->on('tournaments');
         });
     }
 
@@ -26,7 +26,7 @@ class CreateForeignKeyCombatTournament extends Migration
     public function down()
     {
         Schema::table('combats', function (Blueprint $table) {
-            $table->dropForeign('combats_tournament_foreign');
+            $table->dropForeign('combats_tournament_id_foreign');
         });
     }
 }

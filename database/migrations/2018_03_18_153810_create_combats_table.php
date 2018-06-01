@@ -15,10 +15,10 @@ class CreateCombatsTable extends Migration
     {
         Schema::create('combats', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('participant1')->unsigned();
-            $table->integer('participant2')->unsigned();
-            $table->integer('tournament')->unsigned();
-            $table->integer('referee')->unsigned();
+            $table->integer('participant1_id')->unsigned();
+            $table->integer('participant2_id')->unsigned();
+            $table->integer('tournament_id')->unsigned();
+            $table->integer('referee_id')->unsigned();
             $table->integer('hits1');
             $table->integer('hits2');
             $table->timestamp('timestamp');
