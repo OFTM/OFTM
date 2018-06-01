@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\tournament;
+use App\participant;
 use Illuminate\Http\Request;
 
 class TournamentController extends Controller
@@ -46,7 +47,7 @@ class TournamentController extends Controller
      */
     public function show(tournament $tournament)
     {
-        //
+        return view('tournament.view', [ 'tournament' => $tournament]);
     }
 
     /**
