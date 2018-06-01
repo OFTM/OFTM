@@ -21,4 +21,12 @@ class tournament extends Model
     public function weaponclass() {
         return $this->belongsTo('App\weaponclass', 'weaponclass_id');
     }
+
+    public function participants() {
+        return $this->hasMany('App\participant', 'tournament_id');
+    }
+
+    public function combats() {
+        return $this->hasMany('App\combat', 'tournament_id');
+    }
 }
