@@ -28,6 +28,10 @@
                     <td>{{ $tournament->ruleset->name }}</td>
                 </tr>
                 <tr>
+                    <td>Altersklasse</td>
+                    <td>{{ $tournament->ageclass->name }}</td>
+                </tr>
+                <tr>
                     <td>Geschlecht</td>
                     <td>
                         @switch($tournament->sex->name)
