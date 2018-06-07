@@ -33,10 +33,9 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
     import CssConfig from './VuetableCssConfig'
-    import FilterBar from './FilterBar'
+    import FilterBar from './FilterBar_Tournament'
 
     Vue.component('filter-bar', FilterBar)
-
     export default {
         components: {
             Vuetable,
