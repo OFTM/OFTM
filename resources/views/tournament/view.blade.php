@@ -58,6 +58,10 @@
     <div class="card tournament-show col-sm-6">
         <div class="card-header w-100">
             <i class="fa fa-table"></i> Gefechte
+            <div class="btn-group btn-group-sm form pull-right" role="group">
+                <a class="btn btn-primary" href="{{ route('tournament.participants_edit', ['tournament' => $tournament->id]) }}"><i
+                            class="fa fa-plus"></i></a>
+            </div>
         </div>
         <div>
             <table class="table w-100">
@@ -83,6 +87,10 @@
     <div class="card tournament-show col-sm-6">
         <div class="card-header w-100">
             <i class="fa fa-group"></i> Teilnehmer
+            <div class="btn-group btn-group-sm form pull-right" role="group">
+                <a class="btn btn-primary" href="{{ route('tournament.participants_edit', ['tournament' => $tournament->id]) }}"><i
+                            class="fa fa-edit"></i></a>
+            </div>
         </div>
         <div>
             <table class="table w-100">

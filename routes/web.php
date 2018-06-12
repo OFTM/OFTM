@@ -16,4 +16,6 @@ Route::get('/', function () {
 });
 
 Route::resource('fencers', 'FencerController');
+Route::get('tournament/{tournament}/participants/edit', array('uses' => 'TournamentController@participants_edit'))->name('tournament.participants_edit');
+Route::put('tournament/{tournament}/participants', array('uses' => 'TournamentController@participants_store'))->name('tournament.participants_store');
 Route::resource('tournament', 'TournamentController');

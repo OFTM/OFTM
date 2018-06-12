@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\tournament;
 use App\participant;
+use App\sex;
+use App\weaponclass;
+use App\ruleset;
+use App\ageclass;
+use App\fencer;
 use Illuminate\Http\Request;
 
 class TournamentController extends Controller
@@ -25,35 +30,49 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        //
+        return view('tournament.create', ['sexes' => sex::all(), 'weaponclasses' => weaponclass::all(), 'rulesets' => ruleset::all(), 'ageclasses' => ageclass::all()]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'ruleset' => 'required',
+            'sex' => 'required',
+            'weaponclass' => 'required',
+            'ageclass' => 'required',
+        ]);
+        $t = new tournament();
+        $t->name = $validated['name'];
+        $t->ruleset()->associate(ruleset::all()->where('name', $validated['ruleset'])->first());
+        $t->sex()->associate(sex::all()->where('name', $validated['sex'])->first());
+        $t->weaponclass()->associate(weaponclass::all()->where('name', $validated['weaponclass'])->first());
+        $t->ageclass()->associate(ageclass::all()->where('name', $validated['ageclass'])->first());
+        $t->save();
+        return redirect()->route('tournament.show', ['tournament' => $t]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\tournament  $tournament
+     * @param  \App\tournament $tournament
      * @return \Illuminate\Http\Response
      */
     public function show(tournament $tournament)
     {
-        return view('tournament.view', [ 'tournament' => $tournament]);
+        return view('tournament.view', ['tournament' => $tournament]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\tournament  $tournament
+     * @param  \App\tournament $tournament
      * @return \Illuminate\Http\Response
      */
     public function edit(tournament $tournament)
@@ -64,8 +83,8 @@ class TournamentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\tournament  $tournament
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\tournament $tournament
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, tournament $tournament)
@@ -76,11 +95,60 @@ class TournamentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\tournament  $tournament
+     * @param  \App\tournament $tournament
      * @return \Illuminate\Http\Response
      */
     public function destroy(tournament $tournament)
     {
         //
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\tournament $tournament
+     * @return \Illuminate\Http\Response
+     */
+    public function participants_edit(tournament $tournament)
+    {
+        $canidates = [];
+        $fencers = fencer::whereHas('weapons', function ($querry) use ($tournament) {
+            $querry->where('weaponclass_id', $tournament->weaponclass_id);
+        })->whereHas('person.sex', function ($querry) use ($tournament) {
+            $querry->where('id', $tournament->sex_id);
+        })->get();
+
+        foreach ($fencers as $fencer) {
+            if ($fencer->person->birthdate->age >= $tournament->ageclass->min && $fencer->person->birthdate->age <= $tournament->ageclass->max) {
+                array_push($canidates, $fencer);
+            }
+        }
+
+        return view('tournament.participants.edit', ['tournament' => $tournament, 'canidates' => $canidates]);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\tournament $tournament
+     * @return \Illuminate\Http\Response
+     */
+    public function participants_store(Request $request, tournament $tournament)
+    {
+        if ($request->has('reg')) {
+            foreach ($request->input('reg') as $row) {
+                $participant = participant::firstOrCreate(['fencer_id' => $row, 'tournament_id' => $tournament->id]);
+                $participant->save();
+            }
+            foreach ($tournament->participants as $participant) {
+                if(! in_array($participant->fencer_id,$request->input('reg'))) {
+                    $tournament->participants()->where('id', $participant->id)->first()->delete();
+                }
+            }
+        }
+        return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
 }
