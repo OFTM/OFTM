@@ -1,6 +1,6 @@
 <template>
     <div>
-        <filter-bar></filter-bar>
+        <filter-bar-t></filter-bar-t>
         <vuetable ref="vuetable"
                   api-url="/api/tournaments"
                   :fields="fields"
@@ -33,9 +33,9 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
     import CssConfig from './VuetableCssConfig'
-    import FilterBar from './FilterBar_Tournament'
+    import FilterBar_T from './FilterBar_Tournament'
 
-    Vue.component('filter-bar', FilterBar)
+    Vue.component('filter-bar-t', FilterBar_T)
     export default {
         components: {
             Vuetable,
