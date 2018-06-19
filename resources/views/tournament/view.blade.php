@@ -51,52 +51,103 @@
                     <td>Waffengattung</td>
                     <td>{{ $tournament->weaponclass->name }}</td>
                 </tr>
+                @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+                    <tr>
+                        <td>Aktuelle Runde</td>
+                        <td>{{ $tournament->round_now }}</td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
         </div>
     </div>
     <div class="card tournament-show col-sm-6">
         <div class="card-header w-100">
-            <i class="fa fa-table"></i> Gefechte
-            <div class="btn-group btn-group-sm form pull-right" role="group">
-                <a class="btn btn-primary" href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
-                            class="fa fa-plus"></i></a>
-            </div>
+            @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+                <form action="{{ route('tournament.end_round', ['tournament' => $tournament]) }}" method="post">
+                    <i class="fa fa-table"></i> Gefechte
+                    <input type="hidden" name="round-now" value="{{ $tournament->round_now }}">
+                    {{ csrf_field() }}
+                    <div class="pull-right btn-group btn-group-sm form" role="group">
+                        <button class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> Runde beenden!
+                        </button>
+                        <a class="btn btn-primary"
+                           href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
+                                    class="fa fa-plus"></i></a>
+                    </div>
+                </form>
+            @else
+                <i class="fa fa-table"></i> Gefechte
+                <div class="pull-right btn-group btn-group-sm form" role="group">
+                    <a class="btn btn-primary"
+                       href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
+                                class="fa fa-plus"></i></a>
+                </div>
+            @endif
         </div>
-        <div>
-            <table class="table w-100">
-                <tr>
-                    <th>Fechter 1</th>
-                    <th class="text-center">Treffer</th>
-                    <th class="text-center">vs.</th>
-                    <th class="text-center">Treffer</th>
-                    <th class="text-right">Fechter 2</th>
-                </tr>
-                @foreach($tournament->combats as $combat)
+        @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+            @for($i = 1; $i <= $tournament->round_now; $i++)
+                <div>
+                    <h4 class="text-center">Runde {{ $i }}</h4>
+                    <table class="table w-100">
+                        <tr>
+                            <th>Fechter 1</th>
+                            <th class="text-center">Treffer</th>
+                            <th class="text-center">vs.</th>
+                            <th class="text-center">Treffer</th>
+                            <th class="text-right">Fechter 2</th>
+                        </tr>
+                        @foreach($tournament->combats as $combat)
+                            @if($combat->round == $i)
+                                <tr>
+                                    <td>{{ $combat->participant1->fencer->person->forename }} {{ $combat->participant1->fencer->person->surname }}</td>
+                                    <td class="text-center">{{ $combat->hits1 }}</td>
+                                    <td class="text-center">vs.</td>
+                                    <td class="text-center">{{ $combat->hits2 }}</td>
+                                    <td class="text-right">{{ $combat->participant2->fencer->person->forename }} {{ $combat->participant2->fencer->person->surname }}</td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </table>
+                </div>
+            @endfor
+        @else
+            <div>
+                <table class="table w-100">
                     <tr>
-                        <td>{{ $combat->participant1->fencer->person->forename }} {{ $combat->participant1->fencer->person->surname }}</td>
-                        <td class="text-center">{{ $combat->hits1 }}</td>
-                        <td class="text-center">vs.</td>
-                        <td class="text-center">{{ $combat->hits2 }}</td>
-                        <td class="text-right">{{ $combat->participant2->fencer->person->forename }} {{ $combat->participant2->fencer->person->surname }}</td>
+                        <th>Fechter 1</th>
+                        <th class="text-center">Treffer</th>
+                        <th class="text-center">vs.</th>
+                        <th class="text-center">Treffer</th>
+                        <th class="text-right">Fechter 2</th>
                     </tr>
-                @endforeach
-            </table>
-        </div>
+                    @foreach($tournament->combats as $combat)
+                        <tr>
+                            <td>{{ $combat->participant1->fencer->person->forename }} {{ $combat->participant1->fencer->person->surname }}</td>
+                            <td class="text-center">{{ $combat->hits1 }}</td>
+                            <td class="text-center">vs.</td>
+                            <td class="text-center">{{ $combat->hits2 }}</td>
+                            <td class="text-right">{{ $combat->participant2->fencer->person->forename }} {{ $combat->participant2->fencer->person->surname }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        @endif
     </div>
     <div class="card tournament-show col-sm-6">
         <div class="card-header w-100">
             <i class="fa fa-group"></i> Teilnehmer
             <div class="btn-group btn-group-sm form pull-right" role="group">
-                <a class="btn btn-primary" href="{{ route('tournament.participants_edit', ['tournament' => $tournament->id]) }}"><i
+                <a class="btn btn-primary"
+                   href="{{ route('tournament.participants_edit', ['tournament' => $tournament->id]) }}"><i
                             class="fa fa-edit"></i></a>
             </div>
         </div>
         <div>
             <table class="table w-100">
-               <tr>
-                   <th>Name</th>
-               </tr>
+                <tr>
+                    <th>Name</th>
+                </tr>
                 @foreach($tournament->participants as $participant)
                     <tr>
                         <td>{{ $participant->fencer->person->forename }} {{ $participant->fencer->person->surname }}</td>

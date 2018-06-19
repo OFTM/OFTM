@@ -181,4 +181,14 @@ class TournamentController extends Controller
 
         return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
+
+    public function end_round(Request $request, tournament $tournament)
+    {
+        $validated = $request->validate([
+            'round-now' => 'required|integer'
+        ]);
+        $tournament->round_now = $validated['round-now'] + 1;
+        $tournament->save();
+        return redirect()->route('tournament.show', ['tournament' => $tournament]);
+    }
 }
