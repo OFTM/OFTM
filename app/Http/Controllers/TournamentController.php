@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\combat;
+use App\referee;
 use App\tournament;
 use App\participant;
 use App\sex;
@@ -149,6 +151,34 @@ class TournamentController extends Controller
                 }
             }
         }
+        return redirect()->route('tournament.show', ['tournament' => $tournament]);
+    }
+
+    public function combats_create(tournament $tournament)
+    {
+        return view('tournament.combats.edit', ['tournament' => $tournament]);
+    }
+
+    public function combats_store(Request $request, tournament $tournament)
+    {
+        $validated = $request->validate([
+            'fencer-a' => 'required|integer',
+            'fencer-b' => 'required|integer',
+            'hits-a' => 'required|integer',
+            'hits-b' => 'required|integer',
+            'round-now' => 'integer'
+        ]);
+
+        $combat = new combat();
+        $combat->participant1()->associate(participant::all()->where('id', $validated['fencer-a'])->first()->id);
+        $combat->participant2()->associate(participant::all()->where('id', $validated['fencer-b'])->first()->id);
+        $combat->tournament()->associate($tournament->id);
+        $combat->referee()->associate(referee::all()->first()->id);
+        $combat->hits1 = $validated['hits-a'];
+        $combat->hits2 = $validated['hits-b'];
+        $combat->round = $validated['round-now'];
+        $combat->save();
+
         return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
 }

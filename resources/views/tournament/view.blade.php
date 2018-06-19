@@ -59,7 +59,7 @@
         <div class="card-header w-100">
             <i class="fa fa-table"></i> Gefechte
             <div class="btn-group btn-group-sm form pull-right" role="group">
-                <a class="btn btn-primary" href="{{ route('tournament.participants_edit', ['tournament' => $tournament->id]) }}"><i
+                <a class="btn btn-primary" href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
                             class="fa fa-plus"></i></a>
             </div>
         </div>
