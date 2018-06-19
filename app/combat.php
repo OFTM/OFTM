@@ -19,6 +19,6 @@ class combat extends Model
     }
 
     public function referee() {
-        return $this->belongsTo('App\referee', 'tournament_id');
+        return $this->belongsTo('App\referee', 'referee_id');
     }
 }
