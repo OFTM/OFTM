@@ -52,6 +52,9 @@ class TournamentController extends Controller
         ]);
         $t = new tournament();
         $t->name = $validated['name'];
+        if($validated['ruleset'] == "Schweizermodus") {
+            $t->round_now = 1;
+        }
         $t->ruleset()->associate(ruleset::all()->where('name', $validated['ruleset'])->first());
         $t->sex()->associate(sex::all()->where('name', $validated['sex'])->first());
         $t->weaponclass()->associate(weaponclass::all()->where('name', $validated['weaponclass'])->first());
