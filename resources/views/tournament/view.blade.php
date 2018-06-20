@@ -68,12 +68,15 @@
                     <i class="fa fa-table"></i> Gefechte
                     <input type="hidden" name="round-now" value="{{ $tournament->round_now }}">
                     {{ csrf_field() }}
-                    <div class="pull-right btn-group btn-group-sm form" role="group">
-                        <button class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> Runde beenden!
-                        </button>
-                        <a class="btn btn-primary"
+                    <div class="pull-right form">
+                        <div class="btn-group btn-group-sm form">
+                            <button class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> Runde beenden!
+                            </button>
+                        </div>
+                        <a class="btn btn-primary btn-sm"
                            href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
                                     class="fa fa-plus"></i></a>
+
                     </div>
                 </form>
             @else
