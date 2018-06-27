@@ -159,7 +159,7 @@ class TournamentController extends Controller
 
     public function combats_create(tournament $tournament)
     {
-        return view('tournament.combats.edit', ['tournament' => $tournament]);
+        return view('tournament.combats.create', ['tournament' => $tournament]);
     }
 
     public function combats_store(Request $request, tournament $tournament)

@@ -74,7 +74,7 @@
                             </button>
                         </div>
                         <a class="btn btn-primary btn-sm"
-                           href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
+                           href="{{ route('tournament.combats_create', ['tournament' => $tournament->id]) }}"><i
                                     class="fa fa-plus"></i></a>
 
                     </div>
@@ -83,7 +83,7 @@
                 <i class="fa fa-table"></i> Gefechte
                 <div class="pull-right btn-group btn-group-sm form" role="group">
                     <a class="btn btn-primary"
-                       href="{{ route('tournament.combats_edit', ['tournament' => $tournament->id]) }}"><i
+                       href="{{ route('tournament.combats_create', ['tournament' => $tournament->id]) }}"><i
                                 class="fa fa-plus"></i></a>
                 </div>
             @endif
