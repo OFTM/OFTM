@@ -52,8 +52,8 @@ class TournamentController extends Controller
         ]);
         $t = new tournament();
         $t->name = $validated['name'];
-        if($validated['ruleset'] == "Schweizermodus") {
-            $t->round_now = 1;
+        if ($validated['ruleset'] == "Schweizermodus") {
+            $t->round_now = 0;
         }
         $t->ruleset()->associate(ruleset::all()->where('name', $validated['ruleset'])->first());
         $t->sex()->associate(sex::all()->where('name', $validated['sex'])->first());
@@ -149,7 +149,7 @@ class TournamentController extends Controller
                 $participant->save();
             }
             foreach ($tournament->participants as $participant) {
-                if(! in_array($participant->fencer_id,$request->input('reg'))) {
+                if (!in_array($participant->fencer_id, $request->input('reg'))) {
                     $tournament->participants()->where('id', $participant->id)->first()->delete();
                 }
             }
@@ -187,11 +187,66 @@ class TournamentController extends Controller
 
     public function end_round(Request $request, tournament $tournament)
     {
-        $validated = $request->validate([
-            'round-now' => 'required|integer'
-        ]);
-        $tournament->round_now = $validated['round-now'] + 1;
-        $tournament->save();
+        if ($tournament->ruleset->name == "Schweizermodus") {
+            $validated = $request->validate([
+                'round-now' => 'required|integer'
+            ]);
+            $tournament->round_now = $validated['round-now'] + 1;
+            $tournament->save();
+            if ($tournament->round_now == 1) {
+                $rparticipants = $tournament->participants()->inRandomOrder()->get();
+                $half = ceil($rparticipants->count() / 2);
+                $participants = $rparticipants->chunk($half);
+                for ($i = 0; $i < count($participants[0]); $i++) {
+                    $c = new combat();
+                    $c->participant1()->associate($participants[0][$i]->id);
+                    $c->participant2()->associate($participants[1][$half + $i]->id);
+                    $c->referee()->associate(referee::all()->first()->id);
+                    $c->tournament()->associate($tournament->id);
+                    $c->round = $tournament->round_now;
+                    $c->save();
+                }
+            } else {
+                $rank = [];
+                foreach ($tournament->participants as $participant) {
+                    $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
+                }
+                foreach ($tournament->combats as $combat) {
+                    if ($combat->hits1 > $combat->hits2) {
+                        $rank[$combat->participant1_id]['wins']++;
+                    } else {
+                        $rank[$combat->participant2_id]['wins']++;
+                    }
+                }
+                usort($rank, function ($a, $b) {
+                    return $b['wins'] <=> $a['wins'];
+                });
+                for ($i = 0; $i < count($rank); $i++) {
+                    if (!$rank[$i]['assigned']) {
+                        for ($j = 0; $j < count($rank); $j++) {
+                            if (!$rank[$j]['assigned'] && $i != $j) {
+                                if (count($tournament->combats()->where(function ($query) use ($i, $j, $rank) {
+                                        $query->where('participant1_id', $rank[$i]['id'])->where('participant2_id', $rank[$j]['id']);
+                                    })->orWhere(function ($query) use ($i, $j, $rank) {
+                                        $query->Where('participant1_id', $rank[$j]['id'])->where('participant2_id', $rank[$i]['id']);
+                                    })->get()) == 0) {
+                                    $c = new combat();
+                                    $c->tournament()->associate($tournament->id);
+                                    $c->referee(referee::all()->first()->id);
+                                    $c->participant1()->associate($rank[$i]['id']);
+                                    $c->participant2()->associate($rank[$j]['id']);
+                                    $c->round = $tournament->round_now;
+                                    $c->save();
+                                    $rank[$j]['assigned'] = True;
+                                    $rank[$i]['assigned'] = True;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
 }
