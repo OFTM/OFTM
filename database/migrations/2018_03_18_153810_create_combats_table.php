@@ -18,9 +18,9 @@ class CreateCombatsTable extends Migration
             $table->integer('participant1_id')->unsigned();
             $table->integer('participant2_id')->unsigned();
             $table->integer('tournament_id')->unsigned();
-            $table->integer('referee_id')->unsigned();
-            $table->integer('hits1');
-            $table->integer('hits2');
+            $table->integer('referee_id')->unsigned()->nullable();
+            $table->integer('hits1')->nullable();
+            $table->integer('hits2')->nullable();
             $table->timestamp('timestamp');
             $table->timestamps();
         });
