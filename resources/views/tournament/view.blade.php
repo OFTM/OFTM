@@ -90,23 +90,24 @@
         </div>
         @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
             @for($i = 1; $i <= $tournament->round_now; $i++)
-                <div>
+                <div class="card-body">
                     <h4 class="text-center">Runde {{ $i }}</h4>
-                    <table class="table w-100">
-                        <tr>
-                            <th>Fechter 1</th>
-                            <th class="text-center">Treffer</th>
-                            <th class="text-center">vs.</th>
-                            <th class="text-center">Treffer</th>
-                            <th class="text-right">Fechter 2</th>
-                        </tr>
-                        @foreach($tournament->combats as $combat)
+                    <div class="table w-100">
+                        <span class="row">
+                            <span class="col-4">Fechter 1</span>
+                            <span class="col-1 text-center">Treffer</span>
+                            <span class="col-1 text-center">vs.</span>
+                            <span class="col-1 text-center">Treffer</span>
+                            <span class="col-4 text-right">Fechter 2</span>
+                            <span class="col-1"></span>
+                        </span>
+                       @foreach($tournament->combats as $combat)
                             @if($combat->round == $i)
                                 @component('components.combattable-row', ['combat' => $combat])
                                 @endcomponent
                             @endif
                         @endforeach
-                    </table>
+                    </div>
                 </div>
             @endfor
         @else
