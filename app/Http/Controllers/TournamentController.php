@@ -249,4 +249,17 @@ class TournamentController extends Controller
         }
         return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
+
+    public function combats_update(Request $request, tournament $tournament, combat $combat) {
+        $validated = $request->validate([
+            'hits1' => 'required|numeric',
+            'hits2' => 'required|numeric'
+        ]);
+
+        $combat->hits1 = $validated['hits1'];
+        $combat->hits2 = $validated['hits2'];
+        $combat->save();
+
+        return redirect()->route('tournament.show', ['tournament' => $tournament]);
+    }
 }
