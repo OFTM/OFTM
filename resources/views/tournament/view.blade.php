@@ -51,7 +51,7 @@
                     <td>Waffengattung</td>
                     <td>{{ $tournament->weaponclass->name }}</td>
                 </tr>
-                @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+                @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
                     <tr>
                         <td>Aktuelle Runde</td>
                         <td>{{ $tournament->round_now }}</td>
@@ -63,7 +63,7 @@
     </div>
     <div class="card tournament-show col-sm-6">
         <div class="card-header w-100">
-            @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+            @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
                 <form action="{{ route('tournament.end_round', ['tournament' => $tournament]) }}" method="post">
                     <i class="fa fa-table"></i> Gefechte
                     <input type="hidden" name="round-now" value="{{ $tournament->round_now }}">
@@ -88,7 +88,7 @@
                 </div>
             @endif
         </div>
-        @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+        @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
             @for($i = 1; $i <= $tournament->round_now; $i++)
                 <div class="card-body">
                     <h4 class="text-center">Runde {{ $i }}</h4>
