@@ -9,6 +9,7 @@
                   class="form-inline pull-right">
                 @method('delete')
                 {{ csrf_field() }}
+                <a class="btn btn-sm btn-outline-dark mr-1" href="{{ route('tournament.beamer', ['tournament' => $tournament->id]) }}">Beamer</a>
                 <div class="btn-group btn-group-sm form" role="group">
                     <a class="btn btn-primary" href="{{ route('tournament.edit', ['tournament' => $tournament->id]) }}"><i
                                 class="fa fa-edit"></i></a>
