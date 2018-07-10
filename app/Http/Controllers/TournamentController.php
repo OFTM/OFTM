@@ -273,7 +273,7 @@ class TournamentController extends Controller
             foreach ($tournament->combats as $combat) {
                 if ($combat->hits1 > $combat->hits2) {
                     $rank[$combat->participant1_id]['wins']++;
-                } else {
+                } elseif ($combat->hits1 < $combat->hits2) {
                     $rank[$combat->participant2_id]['wins']++;
                 }
             }
@@ -331,7 +331,7 @@ class TournamentController extends Controller
         foreach ($tournament->combats as $combat) {
             if ($combat->hits1 > $combat->hits2) {
                 $rank[$combat->participant1_id]['wins']++;
-            } else {
+            } elseif ($combat->hits1 < $combat->hits2) {
                 $rank[$combat->participant2_id]['wins']++;
             }
         }
