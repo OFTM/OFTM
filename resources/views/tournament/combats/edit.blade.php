@@ -47,7 +47,7 @@
                     <td>Waffengattung</td>
                     <td>{{ $tournament->weaponclass->name }}</td>
                 </tr>
-                @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+                @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
                     <tr>
                         <td>Aktuelle Runde</td>
                         <td>{{ $tournament->round_now }}</td>
@@ -65,7 +65,7 @@
             <form method="POST" action="{{ route('tournament.combats_store', ['tournament' => $tournament]) }}">
                 {{ csrf_field() }}
                 @method('PUT')
-                @if($tournament->ruleset->name == "Schweizermodus" and isset($tournament->round_now))
+                @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
                     <input type="hidden" name="round-now" value="{{ $tournament->round_now }}">
                 @endif
                 <table class="table w-100 text-center">

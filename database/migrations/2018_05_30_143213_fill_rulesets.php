@@ -18,6 +18,11 @@ class FillRulesets extends Migration
                 'name' => 'Schweizermodus'
             )
         );
+        DB::table('rulesets')->insert(
+            array(
+                'name' => 'Dänischermodus'
+            )
+        );
     }
 
     /**
