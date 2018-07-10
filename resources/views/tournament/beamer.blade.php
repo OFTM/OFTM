@@ -5,6 +5,13 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        function timedRefresh(timeoutPeriod) {
+            setTimeout("location.reload(true);",timeoutPeriod);
+        }
+
+        window.onload = timedRefresh(10000);
+    </script>
 </head>
 <body>
 <div id="app">
