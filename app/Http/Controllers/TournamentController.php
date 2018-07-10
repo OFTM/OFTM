@@ -321,4 +321,23 @@ class TournamentController extends Controller
 
         return redirect()->route('tournament.show', ['tournament' => $tournament]);
     }
+
+    public function beamer(tournament $tournament) {
+
+        $rank = [];
+        foreach ($tournament->participants as $participant) {
+            $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False, 'participant' => $participant];
+        }
+        foreach ($tournament->combats as $combat) {
+            if ($combat->hits1 > $combat->hits2) {
+                $rank[$combat->participant1_id]['wins']++;
+            } else {
+                $rank[$combat->participant2_id]['wins']++;
+            }
+        }
+        usort($rank, function ($a, $b) {
+            return $b['wins'] <=> $a['wins'];
+        });
+        return view('tournament.beamer', ['tournament' => $tournament, 'ranking' => $rank]);
+    }
 }
