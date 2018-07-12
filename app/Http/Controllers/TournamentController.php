@@ -212,6 +212,12 @@ class TournamentController extends Controller
                     $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
                 }
                 foreach ($tournament->combats as $combat) {
+                    $rank[$combat->$combat->participant1_id]['given_hits'] += $combat->hits1;
+                    $rank[$combat->$combat->participant2_id]['given_hits'] += $combat->hits2;
+
+                    $rank[$combat->$combat->participant1_id]['index'] += $combat->hits1 - $combat->hits2;
+                    $rank[$combat->$combat->participant2_id]['index'] += $combat->hits2 - $combat->hits1;
+
                     if ($combat->hits1 > $combat->hits2) {
                         $rank[$combat->participant1_id]['wins']++;
                     } elseif ($combat->hits1 < $combat->hits2) {
@@ -271,6 +277,12 @@ class TournamentController extends Controller
                 $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
             }
             foreach ($tournament->combats as $combat) {
+                $rank[$combat->$combat->participant1_id]['given_hits'] += $combat->hits1;
+                $rank[$combat->$combat->participant2_id]['given_hits'] += $combat->hits2;
+
+                $rank[$combat->$combat->participant1_id]['index'] += $combat->hits1 - $combat->hits2;
+                $rank[$combat->$combat->participant2_id]['index'] += $combat->hits2 - $combat->hits1;
+
                 if ($combat->hits1 > $combat->hits2) {
                     $rank[$combat->participant1_id]['wins']++;
                 } elseif ($combat->hits1 < $combat->hits2) {
