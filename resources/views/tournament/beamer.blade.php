@@ -61,6 +61,9 @@
                         <td class="w-10 text-center">Platz</td>
                         <td class="text-center">Fechter</td>
                         <td class="w-10 text-center">Siege</td>
+                        <td class="w-10 text-center">Index</td>
+                        <td class="w-10 text-center">Geg. Treffer</td>
+                        <td class="w-10 text-center">Erh. Treffer</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +72,9 @@
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td class="text-center">{{ $rank['participant']->fencer->person->forename }} {{ $rank['participant']->fencer->person->surname }}</td>
                             <td class="text-center">{{ $rank['wins'] }}</td>
+                            <td class="text-center">{{ $rank['index'] }}</td>
+                            <td class="text-center">{{ $rank['given_hits'] }}</td>
+                            <td class="text-center">{{ $rank['recv_hits'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>

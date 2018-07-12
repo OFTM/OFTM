@@ -169,6 +169,11 @@ return [
          * Laravel Menu
          */
         Lavary\Menu\ServiceProvider::class,
+        /*
+         * Helpers
+         */
+        browner12\helpers\HelperServiceProvider::class,
+
     ],
 
     /*

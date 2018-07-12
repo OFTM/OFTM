@@ -207,20 +207,9 @@ class TournamentController extends Controller
                     $c->save();
                 }
             } else {
-                $rank = [];
-                foreach ($tournament->participants as $participant) {
-                    $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
-                }
-                foreach ($tournament->combats as $combat) {
-                    if ($combat->hits1 > $combat->hits2) {
-                        $rank[$combat->participant1_id]['wins']++;
-                    } else {
-                        $rank[$combat->participant2_id]['wins']++;
-                    }
-                }
-                usort($rank, function ($a, $b) {
-                    return $b['wins'] <=> $a['wins'];
-                });
+                $rank = GenerateRanking($tournament);
+
+                usort($rank, "SortRanking");
                 for ($i = 0; $i < count($rank); $i++) {
                     if (!$rank[$i]['assigned']) {
                         for ($j = 0; $j < count($rank); $j++) {
@@ -266,20 +255,8 @@ class TournamentController extends Controller
                 $c->save();
             }
         } else {
-            $rank = [];
-            foreach ($tournament->participants as $participant) {
-                $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
-            }
-            foreach ($tournament->combats as $combat) {
-                if ($combat->hits1 > $combat->hits2) {
-                    $rank[$combat->participant1_id]['wins']++;
-                } elseif ($combat->hits1 < $combat->hits2) {
-                    $rank[$combat->participant2_id]['wins']++;
-                }
-            }
-            usort($rank, function ($a, $b) {
-                return $b['wins'] <=> $a['wins'];
-            });
+            $rank = GenerateRanking($tournament);
+
             for ($i = 0; $i < count($rank); $i++) {
                 if (!$rank[$i]['assigned']) {
                     for ($j = 0; $j < count($rank); $j++) {
@@ -324,20 +301,8 @@ class TournamentController extends Controller
 
     public function beamer(tournament $tournament) {
 
-        $rank = [];
-        foreach ($tournament->participants as $participant) {
-            $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False, 'participant' => $participant];
-        }
-        foreach ($tournament->combats as $combat) {
-            if ($combat->hits1 > $combat->hits2) {
-                $rank[$combat->participant1_id]['wins']++;
-            } elseif ($combat->hits1 < $combat->hits2) {
-                $rank[$combat->participant2_id]['wins']++;
-            }
-        }
-        usort($rank, function ($a, $b) {
-            return $b['wins'] <=> $a['wins'];
-        });
+        $rank = GenerateRanking($tournament);
+
         return view('tournament.beamer', ['tournament' => $tournament, 'ranking' => $rank]);
     }
 }
