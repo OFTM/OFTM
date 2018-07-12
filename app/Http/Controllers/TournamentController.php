@@ -224,9 +224,8 @@ class TournamentController extends Controller
                         $rank[$combat->participant2_id]['wins']++;
                     }
                 }
-                usort($rank, function ($a, $b) {
-                    return $b['wins'] <=> $a['wins'];
-                });
+
+                usort($rank, "SortRanking");
                 for ($i = 0; $i < count($rank); $i++) {
                     if (!$rank[$i]['assigned']) {
                         for ($j = 0; $j < count($rank); $j++) {
@@ -289,9 +288,8 @@ class TournamentController extends Controller
                     $rank[$combat->participant2_id]['wins']++;
                 }
             }
-            usort($rank, function ($a, $b) {
-                return $b['wins'] <=> $a['wins'];
-            });
+
+            usort($rank, "SortRanking");
             for ($i = 0; $i < count($rank); $i++) {
                 if (!$rank[$i]['assigned']) {
                     for ($j = 0; $j < count($rank); $j++) {
