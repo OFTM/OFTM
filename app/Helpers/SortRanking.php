@@ -13,24 +13,24 @@ if (!function_exists('SortRanking')) {
     function SortRanking(array $a, array $b)
     {
         if ($a['wins'] < $b['wins']) {
-            return -1;
+            return 1;
         }
         if ($a['wins'] > $b['wins']) {
-            return 1;
+            return -1;
         }
         if ($a['wins'] == $b['wins']) {
             if ($a['index'] < $b['index']) {
-                return -1;
+                return 1;
             }
             if ($a['index'] > $b['index']) {
-                return 1;
+                return -1;
             }
             if ($a['index'] == $b['index']) {
                 if ($a['given_hits'] < $b['given_hits']) {
-                    return -1;
+                    return 1;
                 }
                 if ($a['given_hits'] > $b['given_hits']) {
-                    return 1;
+                    return -1;
                 }
                 if ($a['given_hits'] == $b['given_hits']) {
                     return 0;
