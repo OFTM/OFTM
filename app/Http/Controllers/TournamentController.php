@@ -296,7 +296,7 @@ class TournamentController extends Controller
         $combat->hits2 = $validated['hits2'];
         $combat->save();
 
-        return redirect()->route('tournament.show', ['tournament' => $tournament]);
+        return redirect()->route('tournament.show', ['tournament' => $tournament, '#r'.$combat->round]);
     }
 
     public function beamer(tournament $tournament) {

@@ -91,7 +91,7 @@
         </div>
         @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
             @for($i = 1; $i <= $tournament->round_now; $i++)
-                <div class="card-body">
+                <div class="card-body" id="r{{ $i }}">
                     <h4 class="text-center">Runde {{ $i }}</h4>
                     <div class="table w-100">
                         <span class="row">
