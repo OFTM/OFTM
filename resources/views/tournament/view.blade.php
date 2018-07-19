@@ -29,23 +29,35 @@
                     <td>{{ $tournament->ruleset->name }}</td>
                 </tr>
                 <tr>
-                    <td>Altersklasse</td>
-                    <td>{{ $tournament->ageclass->name }}</td>
+                    <td>Altersklassen</td>
+                    <td>
+                        <ul>
+                            @foreach($tournament->ageclasses as $ageclass)
+                                <li>{{ $ageclass->name }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Geschlecht</td>
+                    <td>Geschlechter</td>
                     <td>
-                        @switch($tournament->sex->name)
-                            @case("male")
-                            <i class="fa fa-15x fa-male"></i>
-                            @break
-                            @case("female")
-                            <i class="fa fa-15x fa-female"></i>
-                            @break
-                            @default
-                            {{ $tournament->sex->name }}
-                            @break
-                        @endswitch
+                        <ul>
+                            @foreach($tournament->sexes as $sex)
+                                <li>
+                                    @switch($sex->name)
+                                        @case("male")
+                                        <i class="fa fa-15x fa-male"></i>
+                                        @break
+                                        @case("female")
+                                        <i class="fa fa-15x fa-female"></i>
+                                        @break
+                                        @default
+                                        {{ $sex->name }}
+                                        @break
+                                    @endswitch
+                                </li>
+                            @endforeach
+                        </ul>
                     </td>
                 </tr>
                 <tr>
