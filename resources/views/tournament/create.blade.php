@@ -26,23 +26,29 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="sex">Geschlecht</label></td>
+                        <td>Geschlechter</td>
                         <td>
-                            <select class="custom-select" id="sex" name="sex">
-                                @foreach($sexes as $sex)
-                                    <option>{{ $sex->name }}</option>
-                                @endforeach
-                            </select>
+                            @foreach($sexes as $sex)
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="s{{ $sex->id }}"
+                                           name="sexes[]" value="{{ $sex->id }}">
+                                    <label class="custom-control-label"
+                                           for="s{{ $sex->id }}">{{ $sex->name }}</label>
+                                </div>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="ageclass">Altersklasse</label></td>
+                        <td>Altersklassen</td>
                         <td>
-                            <select class="custom-select" id="ageclass" name="ageclass">
-                                @foreach($ageclasses as $ageclass)
-                                    <option>{{ $ageclass->name }}</option>
-                                @endforeach
-                            </select>
+                            @foreach($ageclasses as $ageclass)
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="a{{ $ageclass->id }}"
+                                           name="ageclasses[]" value="{{ $ageclass->id }}">
+                                    <label class="custom-control-label"
+                                           for="a{{ $ageclass->id }}">{{ $ageclass->name }}</label>
+                                </div>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
