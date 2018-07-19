@@ -10,12 +10,12 @@ class tournament extends Model
         return $this->belongsTo('App\ruleset', 'ruleset_id');
     }
 
-    public function sex() {
-        return $this->belongsTo('App\sex', 'sex_id');
+    public function sexes() {
+        return $this->belongsToMany('App\sex', 'tournaments_sexes', 'tournament_id', 'sex_id');
     }
 
-    public function ageclass() {
-        return $this->belongsTo('App\ageclass', 'ageclass_id');
+    public function ageclasses() {
+        return $this->belongsToMany('App\ageclass', 'tournaments_ageclasses', 'tournament_id', 'ageclass_id');
     }
 
     public function weaponclass() {
