@@ -15,10 +15,10 @@ window.Vue = require('vue');
  */
 
 
-import Vue from 'vue'
-import VueEvents from 'vue-events'
-import Slideout from 'vue-slideout'
-import Datepicker from 'vuejs-datepicker'
+import Vue from 'vue';
+import VueEvents from 'vue-events';
+import Slideout from 'vue-slideout';
+import Datepicker from 'vuejs-datepicker';
 import * as lang from "vuejs-datepicker/src/locale";
 
 Vue.component('fencertable', require('./components/fencertable'))
@@ -53,3 +53,7 @@ const app = new Vue({
         }
     }
 });
+
+export default {
+    components: {Datepicker}
+}

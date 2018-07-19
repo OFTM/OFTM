@@ -75,10 +75,3 @@
         </div>
     </div>
 @endsection
-<script>
-    import Datepicker from "vuejs-datepicker/src/components/Datepicker";
-
-    export default {
-        components: {Datepicker}
-    }
-</script>
