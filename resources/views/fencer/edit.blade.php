@@ -29,8 +29,8 @@
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
                         <td>
                             <datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true"
-                                        :language="languages.de"
-                                        :value="{{ $fencer->person->birthdate->toDateString() }}"></datepicker>
+                                        :language="languages.de" :typeable="true" :placeholder="'2018-12-31'"
+                                        :value="'{{ $fencer->person->birthdate->toDateString() }}'"></datepicker>
                         </td>
                     </tr>
                     <tr>

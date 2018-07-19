@@ -26,7 +26,7 @@
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
                         <td>
                             <datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true"
-                                        :language="languages.de" :format="dateformat"></datepicker>
+                                        :language="languages.de" :format="dateformat" :typeable="true" :placeholder="'2018-12-31'"></datepicker>
                         </td>
                     </tr>
                     <tr>
