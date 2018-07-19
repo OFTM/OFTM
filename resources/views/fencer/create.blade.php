@@ -62,8 +62,9 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="btn-group pull-right">
-                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" name="save" value="next">Speichern und nächster</button>
+                                <button type="submit" class="btn btn-primary" name="save" value="save">Speichern</button>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                             </div>
                         </td>

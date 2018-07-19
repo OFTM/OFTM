@@ -74,7 +74,13 @@ class FencerController extends Controller
             }
         }
         $fencer->save();
-        return redirect()->route('fencers.show', ['fencer' => $fencer]);
+
+        if($request->input('save') == 'next') {
+            return redirect()->route('fencers.create');
+        } else {
+            return redirect()->route('fencers.show', ['fencer' => $fencer]);
+        }
+
     }
 
     /**
