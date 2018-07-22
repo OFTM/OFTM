@@ -288,7 +288,7 @@ class TournamentController extends Controller
                                     $query->where('participant1_id', $rank[$i]['id'])->where('participant2_id', $rank[$j]['id']);
                                 })->orWhere(function ($query) use ($i, $j, $rank) {
                                     $query->Where('participant1_id', $rank[$j]['id'])->where('participant2_id', $rank[$i]['id']);
-                                })->where('id', $tournament->round_now - 1)->get()) == 0) {
+                                })->where('round', $tournament->round_now - 1)->get()) == 0) {
                                 $c = new combat();
                                 $c->tournament()->associate($tournament->id);
                                 $c->referee(referee::all()->first()->id);
