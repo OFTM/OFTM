@@ -26,7 +26,7 @@
                         <td><label for="person-birthdate">Geburtsdatum</label></td>
                         <td>
                             <datepicker name="person-birthdate" id="person-birthdate" :bootstrap-styling="true"
-                                        :language="languages.de" :format="dateformat"></datepicker>
+                                        :language="languages.de" :format="dateformat" :typeable="true" :placeholder="'2018-12-31'"></datepicker>
                         </td>
                     </tr>
                     <tr>
@@ -62,8 +62,9 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="btn-group pull-right">
-                                <button type="submit" class="btn btn-primary">Speichern</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" name="save" value="next">Speichern und nächster</button>
+                                <button type="submit" class="btn btn-primary" name="save" value="save">Speichern</button>
                                 <button type="reset" class="btn btn-danger">Reset</button>
                             </div>
                         </td>
@@ -74,10 +75,3 @@
         </div>
     </div>
 @endsection
-<script>
-    import Datepicker from "vuejs-datepicker/src/components/Datepicker";
-
-    export default {
-        components: {Datepicker}
-    }
-</script>

@@ -37,12 +37,6 @@ body {
   padding-top: 5px;
 }
 
-.slideout-open,
-.slideout-open body,
-.slideout-open .slideout-panel {
-  overflow-y: hidden;
-}
-
 .slideout-open .slideout-panel {
   width: calc(100% - 180px);
 }

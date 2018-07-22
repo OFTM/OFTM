@@ -46,9 +46,9 @@ class TournamentController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'ruleset' => 'required',
-            'sex' => 'required',
+            'sexes' => 'required',
             'weaponclass' => 'required',
-            'ageclass' => 'required',
+            'ageclasses' => 'required',
         ]);
         $t = new tournament();
         $t->name = $validated['name'];
@@ -56,10 +56,15 @@ class TournamentController extends Controller
             $t->round_now = 0;
         }
         $t->ruleset()->associate(ruleset::all()->where('name', $validated['ruleset'])->first());
-        $t->sex()->associate(sex::all()->where('name', $validated['sex'])->first());
         $t->weaponclass()->associate(weaponclass::all()->where('name', $validated['weaponclass'])->first());
-        $t->ageclass()->associate(ageclass::all()->where('name', $validated['ageclass'])->first());
         $t->save();
+        foreach ($validated['sexes'] as $sex) {
+            $t->sexes()->attach($sex);
+        }
+
+        foreach ($validated['ageclasses'] as $ageclass) {
+            $t->ageclasses()->attach($ageclass);
+        }
         return redirect()->route('tournament.show', ['tournament' => $t]);
     }
 
@@ -120,15 +125,19 @@ class TournamentController extends Controller
         $canidates = [];
         $fencers = fencer::whereHas('weapons', function ($querry) use ($tournament) {
             $querry->where('weaponclass_id', $tournament->weaponclass_id);
-        })->whereHas('person.sex', function ($querry) use ($tournament) {
-            $querry->where('id', $tournament->sex_id);
         })->get();
 
-        foreach ($fencers as $fencer) {
-            if ($fencer->person->birthdate->age >= $tournament->ageclass->min && $fencer->person->birthdate->age <= $tournament->ageclass->max) {
-                array_push($canidates, $fencer);
+        foreach ($tournament->ageclasses as $ageclass) {
+            foreach ($tournament->sexes as $sex) {
+                foreach ($fencers as $fencer) {
+                    if ($fencer->person->birthdate->age >= $ageclass->min && $fencer->person->birthdate->age <= $ageclass->max) {
+                        if ($fencer->person->sex->name == $sex->name)
+                            array_push($canidates, $fencer);
+                    }
+                }
             }
         }
+
 
         return view('tournament.participants.edit', ['tournament' => $tournament, 'canidates' => $canidates]);
     }
@@ -207,20 +216,9 @@ class TournamentController extends Controller
                     $c->save();
                 }
             } else {
-                $rank = [];
-                foreach ($tournament->participants as $participant) {
-                    $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
-                }
-                foreach ($tournament->combats as $combat) {
-                    if ($combat->hits1 > $combat->hits2) {
-                        $rank[$combat->participant1_id]['wins']++;
-                    } else {
-                        $rank[$combat->participant2_id]['wins']++;
-                    }
-                }
-                usort($rank, function ($a, $b) {
-                    return $b['wins'] <=> $a['wins'];
-                });
+                $rank = GenerateRanking($tournament);
+
+                usort($rank, "SortRanking");
                 for ($i = 0; $i < count($rank); $i++) {
                     if (!$rank[$i]['assigned']) {
                         for ($j = 0; $j < count($rank); $j++) {
@@ -266,20 +264,8 @@ class TournamentController extends Controller
                 $c->save();
             }
         } else {
-            $rank = [];
-            foreach ($tournament->participants as $participant) {
-                $rank[$participant->id] = ['id' => $participant->id, 'wins' => 0, 'assigned' => False];
-            }
-            foreach ($tournament->combats as $combat) {
-                if ($combat->hits1 > $combat->hits2) {
-                    $rank[$combat->participant1_id]['wins']++;
-                } else {
-                    $rank[$combat->participant2_id]['wins']++;
-                }
-            }
-            usort($rank, function ($a, $b) {
-                return $b['wins'] <=> $a['wins'];
-            });
+            $rank = GenerateRanking($tournament);
+
             for ($i = 0; $i < count($rank); $i++) {
                 if (!$rank[$i]['assigned']) {
                     for ($j = 0; $j < count($rank); $j++) {
@@ -319,6 +305,13 @@ class TournamentController extends Controller
         $combat->hits2 = $validated['hits2'];
         $combat->save();
 
-        return redirect()->route('tournament.show', ['tournament' => $tournament]);
+        return redirect()->route('tournament.show', ['tournament' => $tournament, '#r'.$combat->round]);
+    }
+
+    public function beamer(tournament $tournament) {
+
+        $rank = GenerateRanking($tournament);
+
+        return view('tournament.beamer', ['tournament' => $tournament, 'ranking' => $rank]);
     }
 }

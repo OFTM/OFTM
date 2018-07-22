@@ -22,4 +22,5 @@ Route::get('tournament/{tournament}/combats/create', array('uses' => 'Tournament
 Route::post('tournament/{tournament}/combats', array('uses' => 'TournamentController@combats_store'))->name('tournament.combats_store');
 Route::put('tournament/{tournament}/combats/{combat}', array('uses' => 'TournamentController@combats_update'))->name('tournament.combats_update');
 Route::post('tournament/{tournament}/end_round', array('uses' => 'TournamentController@end_round'))->name('tournament.end_round');
+Route::get('tournament/{tournament}/beamer', array('uses' => 'TournamentController@beamer'))->name('tournament.beamer');
 Route::resource('tournament', 'TournamentController');

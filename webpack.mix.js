@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
 
+const GoogleFontsPlugin = require("google-fonts-webpack-plugin")
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,7 +15,16 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .webpackConfig({
-        devtool: 'source-map'
+        devtool: 'source-map',
+        plugins: [
+            new GoogleFontsPlugin({
+                fonts: [
+                    { family: "Raleway", variants: ["300", "400", "600"]}
+                ],
+                path: "fonts/",
+                filename: "css/fonts.css"
+            })
+        ]
     })
     .copy('node_modules/font-awesome/fonts', 'public/fonts')
     .sourceMaps();

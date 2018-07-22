@@ -1,6 +1,6 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("/css/fonts.css");
 
 // Variables
 @import "variables";
@@ -18,4 +18,8 @@
 
 .fa-15x {
   font-size: 1.5em;
+}
+
+.w-10 {
+  width: 10% !important;
 }

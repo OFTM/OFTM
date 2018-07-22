@@ -9,6 +9,7 @@
                   class="form-inline pull-right">
                 @method('delete')
                 {{ csrf_field() }}
+                <a class="btn btn-sm btn-outline-dark mr-1" href="{{ route('tournament.beamer', ['tournament' => $tournament->id]) }}">Beamer</a>
                 <div class="btn-group btn-group-sm form" role="group">
                     <a class="btn btn-primary" href="{{ route('tournament.edit', ['tournament' => $tournament->id]) }}"><i
                                 class="fa fa-edit"></i></a>
@@ -28,23 +29,35 @@
                     <td>{{ $tournament->ruleset->name }}</td>
                 </tr>
                 <tr>
-                    <td>Altersklasse</td>
-                    <td>{{ $tournament->ageclass->name }}</td>
+                    <td>Altersklassen</td>
+                    <td>
+                        <ul>
+                            @foreach($tournament->ageclasses as $ageclass)
+                                <li>{{ $ageclass->name }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Geschlecht</td>
+                    <td>Geschlechter</td>
                     <td>
-                        @switch($tournament->sex->name)
-                            @case("male")
-                            <i class="fa fa-15x fa-male"></i>
-                            @break
-                            @case("female")
-                            <i class="fa fa-15x fa-female"></i>
-                            @break
-                            @default
-                            {{ $tournament->sex->name }}
-                            @break
-                        @endswitch
+                        <ul>
+                            @foreach($tournament->sexes as $sex)
+                                <li>
+                                    @switch($sex->name)
+                                        @case("male")
+                                        <i class="fa fa-15x fa-male"></i>
+                                        @break
+                                        @case("female")
+                                        <i class="fa fa-15x fa-female"></i>
+                                        @break
+                                        @default
+                                        {{ $sex->name }}
+                                        @break
+                                    @endswitch
+                                </li>
+                            @endforeach
+                        </ul>
                     </td>
                 </tr>
                 <tr>
@@ -90,7 +103,7 @@
         </div>
         @if(($tournament->ruleset->name == "Schweizermodus" or $tournament->ruleset->name == "Dänischermodus") and isset($tournament->round_now))
             @for($i = 1; $i <= $tournament->round_now; $i++)
-                <div class="card-body">
+                <div class="card-body" id="r{{ $i }}">
                     <h4 class="text-center">Runde {{ $i }}</h4>
                     <div class="table w-100">
                         <span class="row">

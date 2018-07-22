@@ -53,8 +53,9 @@
                         title: 'Name'
                     },
                     {
-                        name: 'ageclass.name',
-                        title: 'Altersklasse'
+                        name: 'ageclasses',
+                        title: 'Altersklassen',
+                        callback: 'ageclasses'
                     },
                     {
                         name: 'weaponclass.name',
@@ -65,9 +66,9 @@
                         title: 'Regelsatz'
                     },
                     {
-                        name: 'sex.name',
+                        name: 'sexes',
                         title: 'Geschlecht',
-                        callback: 'sexLabel',
+                        callback: 'sexes',
                         titleClass: 'text-center',
                         dataClass: 'text-center'
                     },
@@ -89,10 +90,22 @@
             this.csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
         methods: {
-            sexLabel(value) {
-                return value === "male"
-                    ? '<i class="fa fa-15x fa-male">'
-                    : '<i class="fa fa-15x fa-female">'
+            ageclasses(value) {
+                let data = "";
+                value.forEach(function (ageclass) {
+                    data += ageclass.name + ", "
+                });
+                return data.slice(0,-2)
+            },
+            sexes(value) {
+                let data = "";
+                value.forEach(function (sex) {
+                    data += sex.name === "male"
+                        ? '<i class="fa fa-15x fa-male"></i>'
+                        : '<i class="fa fa-15x fa-female"></i>';
+                    data += " "
+                });
+                return data.slice(0,-1)
             },
             onPaginationData(paginationData) {
                 this.$refs.pagination.setPaginationData(paginationData)
